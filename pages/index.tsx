@@ -15,7 +15,7 @@ export default function Home() {
 
   let shareableLink = "";
   if (process.browser) {
-    shareableLink = `${window.location.hostname}:${window.location.port}/?ssid=${ssid}&wifiPassword=${wifiPassword}`;
+    shareableLink = `https://${window.location.hostname}:${window.location.port}/?ssid=${ssid}&wifiPassword=${wifiPassword}`;
   }
 
   useEffect(() => {
