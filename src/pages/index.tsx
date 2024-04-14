@@ -1,7 +1,7 @@
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react";
 
 import QRCode from "react-qr-code";
-import styles from "../styles/Home.module.css"
+import React from "react";
 import { useRouter } from "next/dist/client/router";
 
 export default function Home() {
@@ -9,19 +9,19 @@ export default function Home() {
   const router = useRouter();
 
   const [ssid, setSSID] = useState("");
+  const [shareableLink, setShareableLink] = useState("");
   const [wifiPassword, setWifiPassword] = useState("");
 
   const data = `WIFI:T:WPA;S:${ssid};P:${wifiPassword};;`;
 
-  let shareableLink = "";
-  if (process.browser) {
-    shareableLink = `https://${window.location.hostname}:${window.location.port}/?ssid=${ssid}&wifiPassword=${wifiPassword}`;
-  }
-
   useEffect(() => {
     setSSID(router.query["ssid"] as string);
     setWifiPassword(router.query["wifiPassword"] as string);
-  }, [router.query["ssid"], router.query["wifiPassword"]]);
+   }, [router.query["ssid"], router.query["wifiPassword"]]);
+
+  useEffect(() => {
+    setShareableLink(`https://${window.location.hostname}:${window.location.port}/?ssid=${ssid}&wifiPassword=${wifiPassword}`);
+  }, [ssid, wifiPassword]);
 
   const onSSIDChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setSSID(event.target.value);
@@ -32,7 +32,7 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.container}>
+    <div>
       Wifi name
       <input
         type="text"
@@ -45,7 +45,9 @@ export default function Home() {
         value={wifiPassword}
         onChange={onWifiPasswordChanged}
       />
-      <a href={shareableLink}>{shareableLink}</a>
+      <p>
+        <a href={shareableLink}>{shareableLink}</a>
+      </p>
       <QRCode
         size={500}
         style={{ height: "auto", maxWidth: "500px", width: "500px" }}
