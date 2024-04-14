@@ -1,7 +1,8 @@
-import { useRouter } from "next/dist/client/router";
-import { route } from "next/dist/next-server/server/router";
 import { ChangeEvent, useEffect, useState } from "react"
+
+import QRCode from "react-qr-code";
 import styles from "../styles/Home.module.css"
+import { useRouter } from "next/dist/client/router";
 
 export default function Home() {
 
@@ -11,7 +12,6 @@ export default function Home() {
   const [wifiPassword, setWifiPassword] = useState("");
 
   const data = `WIFI:T:WPA;S:${ssid};P:${wifiPassword};;`;
-  const imageUrl = `https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=${data}`;
 
   let shareableLink = "";
   if (process.browser) {
@@ -46,7 +46,12 @@ export default function Home() {
         onChange={onWifiPasswordChanged}
       />
       <a href={shareableLink}>{shareableLink}</a>
-      <img src={imageUrl} />
+      <QRCode
+        size={500}
+        style={{ height: "auto", maxWidth: "500px", width: "500px" }}
+        value={data}
+        viewBox={`0 0 256 256`}
+      />
     </div>
   )
 }
