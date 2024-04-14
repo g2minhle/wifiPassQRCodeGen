@@ -33,24 +33,28 @@ export default function Home() {
 
   return (
     <div>
+      <p>
       Wifi name
       <input
         type="text"
         value={ssid}
         onChange={onSSIDChanged}
       />
-      Wifi password
-      <input
-        type="text"
-        value={wifiPassword}
-        onChange={onWifiPasswordChanged}
-      />
+      </p>
+      <p>
+        Wifi password
+        <input
+          type="text"
+          value={wifiPassword}
+          onChange={onWifiPasswordChanged}
+        />
+      </p>
       <p>
         <a href={shareableLink}>{shareableLink}</a>
       </p>
       <QRCode
         size={500}
-        style={{ height: "auto", maxWidth: "500px", width: "500px" }}
+        style={{ height: "auto", maxWidth: "25%", width: "25%" }}
         value={data}
         viewBox={`0 0 256 256`}
       />
